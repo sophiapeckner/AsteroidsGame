@@ -5,12 +5,12 @@ Spaceship glider = new Spaceship();
 public void setup() {
   //your code here
   size(400,400);
-  for (int i = 0; i < stars.length; i++) stars[i] = new Star(i, stars.length);
+  for (int i = 0; i < stars.length; i++) stars[i] = new Star();
 }
 
 public void draw() {
   //your code here
-  background(#000080);
+  background(#3a2731);
   for (int i = 0; i < stars.length; i++) stars[i].show();
   
   if (keyPressed) {
