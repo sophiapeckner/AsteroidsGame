@@ -1,10 +1,11 @@
 //your variable declarations here
 Star[] stars = new Star[50];
 Spaceship glider = new Spaceship(); 
+boolean keyDown = false;
 
 public void setup() {
   //your code here
-  size(400,400);
+  size(500,500);
   for (int i = 0; i < stars.length; i++) stars[i] = new Star();
 }
 
@@ -22,7 +23,16 @@ public void draw() {
       glider.turn(5);
     else if (keyCode == LEFT)
       glider.turn(-5);
+    else if (key == ' ' && keyDown == false) {
+      keyDown = true;
+      glider.myCenterX = (double) (Math.random() * 450);
+      glider.myCenterY = (double) (Math.random() * 450);
+      glider.myPointDirection = (double) (Math.random() * 180);
+    }
+  } else {
+    keyDown = false;
   }
+  
   glider.show();
   glider.move();
 }
