@@ -1,33 +1,51 @@
 class Asteroid extends Floater{
-  private double myRadius;
+  private int scale;
   
   public Asteroid() {
+    scale = 8;
+    corners = 12;
+    xCorners = new int[corners];
+    yCorners = new int[corners];    
+    xCorners[0] = scale * 2;
+    yCorners[0] = scale * -2;
+    xCorners[1] = scale * 0;
+    yCorners[1] = scale * 0;
+    xCorners[2] = scale * -1;
+    yCorners[2] = scale * -2;
+    xCorners[3] = scale * 0;
+    yCorners[3] = scale * 0;
+    xCorners[4] = scale * -2;
+    yCorners[4] = scale * -1;
+    xCorners[5] = scale * 0;
+    yCorners[5] = scale * 0;
+    xCorners[6] = scale * -2;
+    yCorners[6] = scale * 2;
+    xCorners[7] = scale * 0;
+    yCorners[7] = scale * 0;
+    xCorners[8] = scale * 1;
+    yCorners[8] = scale * 2;
+    xCorners[9] = scale * 0;
+    yCorners[9] = scale * 0;
+    xCorners[10] = scale * 2;
+    yCorners[10] = scale * 1;
+    xCorners[11] = scale * 0;
+    yCorners[11] = scale * 0;
     myXspeed = (double) (Math.random() * 1) + 1;
     myYspeed = (double) (Math.random() * 1) + 1;
     myPointDirection = 0;
     myCenterX = (double) (Math.random() * 300);
     myCenterY = (double) (Math.random() * 300);
-    myRadius = (double) (Math.random() * 10) + 20;
+    myColor = color(#ded6d0);
   }
   
-  public void show() {
-    fill(#e9700c);
-    //noStroke();
-    ellipse((float)myCenterX, (float)myCenterY, (float)myRadius, (float)myRadius);
-    drawTail();
+  public void drawCircleHue() {
+    for (int i = 0; i < (scale*4); i++) {
+      noFill();
+      int b = 255 - (i*2);
+      float a = 255 - (i*8);
+      println(a);
+      stroke(255, 255, b, a);
+      ellipse((float)myCenterX, (float)myCenterY, i, i);
+   }
   }
-  
-  public void drawTail() {
-    //stroke(#fded2b);
-    for(int i = 185; i > 175; i--) {
-      int g = (int)(Math.random()*199);
-      stroke(199, g, 0);
-      float angle=TWO_PI/150;
-      line((float) myCenterX,
-           (float) myCenterY,
-           (float) ( ( ( (200-i) *myRadius)/3) * sin(angle*i) + myCenterX ),
-           (float) ( ( ( (200-i)*myRadius)/3) * cos(angle*i) + myCenterY )
-           );
-    }
-  } 
 }
