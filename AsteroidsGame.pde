@@ -33,6 +33,7 @@ public void draw() {
   }
   
   if (keyPressed) {
+    glider.openGlider();
     if (keyCode == UP)            // accelerate
       glider.accelerate(0.05);
     else if (keyCode == DOWN)    // decelerate
@@ -48,6 +49,7 @@ public void draw() {
       glider.myPointDirection = (double) (Math.random() * 180);
     }
   } else {
+    glider.closeGlider();
     keyDown = false;
   }
   
