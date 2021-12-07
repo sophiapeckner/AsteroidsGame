@@ -39,13 +39,24 @@ class Asteroid extends Floater{
   }
   
   public void drawCircleHue() {
-    for (int i = 0; i < (scale*4); i++) {
+    for (int i = 0; i < (scale*3); i++) {
       noFill();
       int b = 255 - (i*2);
       float a = 255 - (i*8);
-      println(a);
       stroke(255, 255, b, a);
       ellipse((float)myCenterX, (float)myCenterY, i, i);
-   }
+    }
+  }
+  
+  public void thrust() {
+    
+  }
+  
+  public double getX() {
+    return myCenterX;
+  }
+   
+  public double getY() {
+    return myCenterY;
   }
 }
