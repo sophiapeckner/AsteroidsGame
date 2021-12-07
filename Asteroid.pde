@@ -36,6 +36,7 @@ class Asteroid extends Floater{
     myCenterX = (double) (Math.random() * 300);
     myCenterY = (double) (Math.random() * 300);
     myColor = color(#ded6d0);
+    myStroke = 255;
   }
   
   public void drawCircleHue() {
