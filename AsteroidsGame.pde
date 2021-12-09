@@ -17,9 +17,9 @@ public void setup() {
 
 public void draw() {
   //your code here
-  background(#300403);  //#3a2731,#b52316
+  //background(#300403);  //#3a2731,#b52316
+  drawMountains();
   for (int i = 0; i < stars.length; i++) stars[i].show();
-  
   for (int i = 0; i < asteroids.size(); i++) {
     asteroids.get(i).move();
     asteroids.get(i).show();
@@ -57,23 +57,21 @@ public void draw() {
   glider.move();
 }
 
-void setGradient(int x, int y, float w, float h, color c1, color c2, int axis ) {
-  noFill();
-
-  if (axis == 1) {  // Top to bottom gradient
-    for (int i = y; i <= y+h; i++) {
-      float inter = map(i, y, y+h, 0, 1);
-      color c = lerpColor(c1, c2, inter);
-      stroke(c);
-      line(x, i, x+w, i);
+// https://openprocessing.org/sketch/179344/
+public void drawMountains() {
+  background(40);
+  for(int i = 0; i <= 10; i++){
+    float y = i*30;
+    fill(0, map(i, 0, 5, 140, 20), map(i, 0, 5, 245, 140));
+    stroke(0, map(i, 0, 5, 150, 20), map(i, 0, 5, 255, 150));
+    beginShape();
+    vertex(0, 200+y);
+    for(int q = 0; q <= width; q+=10){
+      float y2 = 200+y-abs(sin(radians(q)+i))*cos(radians(i+q/2))*map(i, 0, 5, 100, 20);
+      vertex(q, y2);
     }
-  }  
-  else if (axis == 2) {  // Left to right gradient
-    for (int i = x; i <= x+w; i++) {
-      float inter = map(i, x, x+w, 0, 1);
-      color c = lerpColor(c1, c2, inter);
-      stroke(c);
-      line(i, y, i, y+h);
-    }
+    vertex(width, height);
+    vertex(0, height);
+    endShape(CLOSE);
   }
 }
