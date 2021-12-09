@@ -7,13 +7,14 @@ class Star {
   
   public Star() {
     myX = (int)(Math.random()*width);
-    myY = (int)(Math.random()*width);
+    myY = (int)(Math.random()*width/2.5);
     myW = (float)(Math.random()) + 1;
     myH = (float)(Math.random()) + 1.5;
   }
   
   public void show() {
-    fill(130, 84, 68, 255);
+    fill(#936d40);
+    stroke(#936d40);
     ellipse(myX, myY, myW, myH);
   }
 }
