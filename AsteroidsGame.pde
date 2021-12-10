@@ -47,12 +47,19 @@ public void draw() {
       allGliders("turnR");
     else if (keyCode == LEFT)
       allGliders("turnL");
-    //else if (key == ' ' && keyDown == false) {
-    //  keyDown = true;
-    //  glider.myCenterX = (double) (Math.random() * 350);
-    //  glider.myCenterY = (double) (Math.random() * 350);
-    //  glider.myPointDirection = (double) (Math.random() * 180);
-    //}
+    else if (key == ' ' && keyDown == false) {
+      keyDown = true;
+      //allGliders("hyperSpace");
+      keyDown = true;
+      double randomX = (double) (Math.random() * 350);
+      double randomY = (double) (Math.random() * 350);
+      double randomDegrees = (double) (Math.random() * 180);
+      for (int i = 0; i < gliders.length; i++){
+        gliders[i].setX(randomX);
+        gliders[i].setY(30*i + randomY);
+        gliders[i].myPointDirection = randomDegrees;
+      }
+    }
   } else {
     allGliders("close");
     keyDown = false;
@@ -91,14 +98,14 @@ public void allGliders(String type) {
     else if (type == "turnR") gliders[i].turn(5);
     else if (type == "turnL") gliders[i].turn(-5);
     else if (type == "hyperSpace") {
-      
+      //keyDown = true;
+      //double randomX = (double) (Math.random() * 350);
+      //double randomY = (double) (Math.random() * 350);
+      //double randomDegrees = (double) (Math.random() * 180);
+      //gliders[i].setX(randomX);
+      //gliders[i].setY(randomY*i);
+      //gliders[i].myPointDirection = randomDegrees;
     }
-    //else if (type == "collision") {
-    //  d = dist((float)gliders[i].getX(),
-    //               (float)gliders[i].getY(),
-    //               (float)asteroids.get(i).getX(),
-    //               (float)asteroids.get(i).getY() );
-    //}
   }
 }
     
