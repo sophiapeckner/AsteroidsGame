@@ -1,8 +1,7 @@
 //your variable declarations here
 Star[] stars = new Star[50];
 ArrayList <Asteroid> asteroids = new ArrayList <Asteroid>();
-//Asteroid[] asteroids = new Asteroid[3];
-Spaceship glider = new Spaceship(); 
+Spaceship[] gliders = new Spaceship[3]; 
 
 boolean keyDown = false;
 
@@ -10,56 +9,61 @@ public void setup() {
   //your code here
   size(400,400);
   for (int i = 0; i < stars.length; i++)      stars[i] = new Star();
-  for (int i = 0; i < 3; i++) {
-    asteroids.add(new Asteroid());
+  for (int i = 0; i < gliders.length; i++){ 
+    gliders[i] = new Spaceship();
+    gliders[i].setX(100);
+    gliders[i].setY(30*i + 20);
   }
+  for (int i = 0; i < 3; i++)                 asteroids.add(new Asteroid());
 }
 
 public void draw() {
   //your code here
-  //background(#300403);  //#3a2731,#b52316
-  drawMountains();
+  background(40); // #300403,#3a2731,#b52316
   for (int i = 0; i < stars.length; i++) stars[i].show();
+  drawMountains();
   for (int i = 0; i < asteroids.size(); i++) {
+    
     asteroids.get(i).move();
     asteroids.get(i).show();
-      asteroids.get(i).drawCircleHue();
-    float d = dist((float)glider.getX(),
-                   (float)glider.getY(),
-                   (float)asteroids.get(i).getX(),
-                   (float)asteroids.get(i).getY() );
-    if (d < 20)
-      asteroids.remove(i);
+    asteroids.get(i).drawCircleHue();
+    for (int j = 0; j < gliders.length; j++){
+      float d = dist((float)gliders[j].getX(),
+                     (float)gliders[j].getY(),
+                     (float)asteroids.get(i).getX(),
+                     (float)asteroids.get(i).getY() );
+      if (d < 20)
+        asteroids.remove(i);
+    }
   }
   
   if (keyPressed) {
-    glider.openGlider();
+    allGliders("open");
     if (keyCode == UP)            // accelerate
-      glider.accelerate(0.05);
+      allGliders("fast");
     else if (keyCode == DOWN)    // decelerate
-      glider.accelerate(-0.05);
+      allGliders("slow");
     else if (keyCode == RIGHT)  // rotate right
-      glider.turn(5);
+      allGliders("turnR");
     else if (keyCode == LEFT)
-      glider.turn(-5);
-    else if (key == ' ' && keyDown == false) {
-      keyDown = true;
-      glider.myCenterX = (double) (Math.random() * 350);
-      glider.myCenterY = (double) (Math.random() * 350);
-      glider.myPointDirection = (double) (Math.random() * 180);
-    }
+      allGliders("turnL");
+    //else if (key == ' ' && keyDown == false) {
+    //  keyDown = true;
+    //  glider.myCenterX = (double) (Math.random() * 350);
+    //  glider.myCenterY = (double) (Math.random() * 350);
+    //  glider.myPointDirection = (double) (Math.random() * 180);
+    //}
   } else {
-    glider.closeGlider();
+    allGliders("close");
     keyDown = false;
   }
   
-  glider.show();
-  glider.move();
+  allGliders("show");
+  allGliders("move");
 }
 
 // https://openprocessing.org/sketch/179344/
 public void drawMountains() {
-  background(40);
   for(int i = 0; i <= 10; i++){
     float y = i*30;
     fill(0, map(i, 0, 5, 140, 20), map(i, 0, 5, 245, 140));
@@ -75,3 +79,26 @@ public void drawMountains() {
     endShape(CLOSE);
   }
 }
+
+public void allGliders(String type) {
+  for (int i = 0; i < gliders.length; i++) {
+    if (type == "show") gliders[i].show();
+    else if (type == "move") gliders[i].move();
+    else if (type == "close") gliders[i].closeGlider();
+    else if (type == "open") gliders[i].openGlider();
+    else if (type == "fast") gliders[i].accelerate(0.05);
+    else if (type == "slow") gliders[i].accelerate(-0.05);
+    else if (type == "turnR") gliders[i].turn(5);
+    else if (type == "turnL") gliders[i].turn(-5);
+    else if (type == "hyperSpace") {
+      
+    }
+    //else if (type == "collision") {
+    //  d = dist((float)gliders[i].getX(),
+    //               (float)gliders[i].getY(),
+    //               (float)asteroids.get(i).getX(),
+    //               (float)asteroids.get(i).getY() );
+    //}
+  }
+}
+    
