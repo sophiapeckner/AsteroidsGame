@@ -10,14 +10,6 @@ class Spaceship extends Floater {
     myCenterY = 100;
   } 
   
-  public double getX() {
-    return myCenterX;
-  }
-   
-  public double getY() {
-    return myCenterY;
-  }
-  
   public void closeGlider() {
     scale = 4;
     corners = 14;
@@ -86,5 +78,22 @@ class Spaceship extends Floater {
     yCorners[12] = scale * -2;
     xCorners[13] = scale * -5;
     yCorners[13] = scale * 0;
+  }
+  
+  
+  public double getX() {
+    return myCenterX;
+  }
+   
+  public double getY() {
+    return myCenterY;
+  }
+  
+  public void setX(double x) {
+    myCenterX = x;
+  }
+  
+  public void setY(double y) {
+    myCenterY = y;
   }
 }
