@@ -4,39 +4,29 @@ ArrayList <Asteroid> asteroids = new ArrayList <Asteroid>();
 Spaceship[] gliders = new Spaceship[3]; 
 
 boolean keyDown = false;
+boolean nextPage = false;
 
 public void setup() {
   //your code here
-  size(400,400);
+  size(450,450);
   for (int i = 0; i < stars.length; i++)      stars[i] = new Star();
   for (int i = 0; i < gliders.length; i++){ 
     gliders[i] = new Spaceship();
     gliders[i].setX(100);
     gliders[i].setY(30*i + 20);
   }
-  for (int i = 0; i < 3; i++)                 asteroids.add(new Asteroid());
+  for (int i = 0; i < 10; i++)                 asteroids.add(new Asteroid());
 }
 
 public void draw() {
   //your code here
   background(40); // #300403,#3a2731,#b52316
   for (int i = 0; i < stars.length; i++) stars[i].show();
-  drawMountains();
-  for (int i = 0; i < asteroids.size(); i++) {
-    
-    asteroids.get(i).move();
-    asteroids.get(i).show();
-    asteroids.get(i).drawCircleHue();
-    for (int j = 0; j < gliders.length; j++){
-      float d = dist((float)gliders[j].getX(),
-                     (float)gliders[j].getY(),
-                     (float)asteroids.get(i).getX(),
-                     (float)asteroids.get(i).getY() );
-      if (d < 20)
-        asteroids.remove(i);
-    }
-  }
-  
+  if (nextPage)   page2();
+  else            page1();
+}
+
+public void moveGliders() {
   if (keyPressed) {
     allGliders("open");
     if (keyCode == UP)            // accelerate
@@ -60,13 +50,24 @@ public void draw() {
         gliders[i].myPointDirection = randomDegrees;
       }
     }
-  } else {
+  }
+  else {
     allGliders("close");
     keyDown = false;
   }
-  
-  allGliders("show");
-  allGliders("move");
+}
+
+public void allGliders(String type) {
+  for (int i = 0; i < gliders.length; i++) {
+    if (type == "show") gliders[i].show();
+    else if (type == "move") gliders[i].move();
+    else if (type == "close") gliders[i].closeGlider();
+    else if (type == "open") gliders[i].openGlider();
+    else if (type == "fast") gliders[i].accelerate(0.05);
+    else if (type == "slow") gliders[i].accelerate(-0.05);
+    else if (type == "turnR") gliders[i].turn(5);
+    else if (type == "turnL") gliders[i].turn(-5);
+  }
 }
 
 // https://openprocessing.org/sketch/179344/
@@ -87,25 +88,43 @@ public void drawMountains() {
   }
 }
 
-public void allGliders(String type) {
-  for (int i = 0; i < gliders.length; i++) {
-    if (type == "show") gliders[i].show();
-    else if (type == "move") gliders[i].move();
-    else if (type == "close") gliders[i].closeGlider();
-    else if (type == "open") gliders[i].openGlider();
-    else if (type == "fast") gliders[i].accelerate(0.05);
-    else if (type == "slow") gliders[i].accelerate(-0.05);
-    else if (type == "turnR") gliders[i].turn(5);
-    else if (type == "turnL") gliders[i].turn(-5);
-    else if (type == "hyperSpace") {
-      //keyDown = true;
-      //double randomX = (double) (Math.random() * 350);
-      //double randomY = (double) (Math.random() * 350);
-      //double randomDegrees = (double) (Math.random() * 180);
-      //gliders[i].setX(randomX);
-      //gliders[i].setY(randomY*i);
-      //gliders[i].myPointDirection = randomDegrees;
-    }
+public void page1() {
+  String[] intro = {
+    "Water. Earth. Fire. Air.",
+    "Long ago, the four nations lived together in harmony.",
+    "Then, everything changed when the Fire Nation attacked.",
+    "Only three Airbenders could stop them.",
+    "Controls:",
+    "Up/Down - Accelerate gliders",
+    "Right/Left - Rotate gliders",
+    "Space - Avatar State Madness"
+  };
+  textAlign(CENTER, CENTER);
+  textSize(18);
+  int s = 25;
+  int middle = ( height-(intro.length*s) )/2;
+  for (int i = 0; i < intro.length; i++) {
+    fill(255);
+    text(intro[i], width/2, middle+(i*s));
   }
+  
+  if (mousePressed) nextPage = true;
 }
-    
+
+public void page2() {
+  for (int i = 0; i < stars.length; i++) stars[i].show();
+  drawMountains();
+  for (int i = 0; i < asteroids.size(); i++) {
+    asteroids.get(i).move();
+    asteroids.get(i).show();
+    asteroids.get(i).drawCircleHue();
+    float d = dist((float)gliders[1].getX(),
+                   (float)gliders[1].getY(),
+                   (float)asteroids.get(i).getX(),
+                   (float)asteroids.get(i).getY() );
+    if (d < 40)  asteroids.remove(i);
+  }
+  moveGliders();
+  allGliders("show");
+  allGliders("move");
+}
