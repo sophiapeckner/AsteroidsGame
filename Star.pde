@@ -7,7 +7,7 @@ class Star {
   
   public Star() {
     myX = (int)(Math.random()*width);
-    myY = (int)(Math.random()*width/2.5);
+    myY = (int)(Math.random()*width);
     myW = (float)(Math.random()) + 1;
     myH = (float)(Math.random()) + 1.5;
   }
